@@ -1,5 +1,5 @@
 <template>
-    <div v-if="canbecommented" class="comments-eblogger">
+    <div v-if="canbecommented" class="comments-eblogger mt-3">
         <h4>{{ nbComments }} Commentaires</h4>
         <div v-if="!comments.length" class="comment-be-first"><h4 >Soyez le premier à commenter</h4></div>
         <comment-form :commentable="commentable" :logged="logged" :canberated="canberated" @submitComment="submitComment" />

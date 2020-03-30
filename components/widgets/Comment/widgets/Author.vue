@@ -1,5 +1,5 @@
 <template>
-    <div class="author">
+    <div class="author d-flex align-items-center">
         <gravatar-widget class="float-left" :user="author"></gravatar-widget>
         <span class="author-name">{{ author.name }}</span>
     </div>
@@ -29,8 +29,6 @@
     .author-name{
         margin-left: 5px;
         font-weight: bold;
-        &:after {
-            content: ' - ';
-        }
     }
+
 </style>

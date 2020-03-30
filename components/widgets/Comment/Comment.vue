@@ -2,13 +2,10 @@
     <div class="comment-wrapper">
         <div class="comment">
             <div class="header">
-                <author-comment :author="comment.commented" class="author" />
-                <date-helper :date="comment.created_at" class="date" :format="'since'"/>
-                <rating-buttons v-if="comment.parent_id == 0" :canberated="canberated" :ratable="comment"
-                   :parent="commentable" class="rating"/>
+                <comment-header :comment="comment" :commentable="commentable" :canberated="canberated"></comment-header>
             </div>
             <p class="card-text">{{ comment.comment }}</p>
-            <div class="reactions">
+            <div class="reactions d-flex align-items-center">
                 <like-buttons :item="comment" :logged="logged" :canbeliked="canbeliked" :postlikeurl="postlikeurl" :postdislikeurl="postdislikeurl" />
                 <a v-if="logged" href="#" @click.prevent="showForm" class="btn btn-link" >{{buttonLabel}}</a>
                 <report-buttons :item="comment" :canbereported="canbereported" :postreporturl="postreporturl" :logged="logged" />
@@ -32,9 +29,7 @@
         components: {
             CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
             CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
-            AuthorComment: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Author'),
-            DateHelper: () => import('vuejs-eblogger/components/widgets/DateHelper'),
-            RatingButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Rate'),
+            CommentHeader: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentHeader'),
             LikeButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Like'),
             ReportButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Report')
         },
@@ -123,6 +118,6 @@
         margin-left: 50px
     }
     .reactions {
-        display:flex;
+        margin-left: 42px;
     }
 </style>

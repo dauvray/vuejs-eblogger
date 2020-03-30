@@ -72,8 +72,3 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    .like-dislike-buttons{
-        margin-left: 42px;
-    }
-</style>
