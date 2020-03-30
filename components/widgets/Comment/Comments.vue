@@ -20,8 +20,8 @@
     export default {
         name: 'Comments',
         components: {
-            CommentList: () => import('vuejs-eblogger/components/widgets/Comment/widgets/CommentList'),
-            CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/widgets/CommentForm'),
+            CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
+            CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
             BlogPagination: () => import('vuejs-eblogger/components/widgets/Pagination')
         },
         data() {

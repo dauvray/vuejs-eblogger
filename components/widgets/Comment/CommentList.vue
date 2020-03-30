@@ -12,7 +12,7 @@
     export default {
         name: 'CommentList',
         components: {
-            CommentItem: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Comment'),
+            CommentItem: () => import('vuejs-eblogger/components/widgets/Comment/Comment'),
         },
         data() {
             return { }
