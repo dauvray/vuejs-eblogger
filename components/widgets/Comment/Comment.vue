@@ -29,11 +29,10 @@
 
     export default {
         name: 'Comment',
-
         components: {
             CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
             CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
-            AuthorComment: () => import('vuejs-eblogger/components/widgets/Author'),
+            AuthorComment: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Author'),
             DateHelper: () => import('vuejs-eblogger/components/widgets/DateHelper'),
             RatingButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Rate'),
             LikeButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Like'),
