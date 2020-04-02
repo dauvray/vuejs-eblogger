@@ -17,7 +17,7 @@
         <tag-list class="tag-article" :tags="article.tags"></tag-list>
         <rating-buttons class="rate-aricle" :ratable="article" :canberated="canDoIt('allow_rating','enable_rates', article)"></rating-buttons>
         <author-article class="author-article" :item="article"></author-article>
-        <image-wrapper v-for="image in article.images" v-if="image" :picture="image" :key="image.id"></image-wrapper>
+<!--        <image-wrapper v-for="image in article.images" v-if="image" :picture="image" :key="image.id"></image-wrapper>-->
         <div class="content-article" v-html="article.content"></div>
         <like-buttons class="like-article" :item="article"
                       :canbeliked="canDoIt('allow_likes','enable_likes', article)"
