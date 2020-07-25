@@ -68,7 +68,7 @@
             }
         },
         created() {
-            this.requestApi(this.$route.path)
+            this.requestApi(`/ajax${this.$route.path}`)
             .then( response => {
                 this.processData(response)
             })

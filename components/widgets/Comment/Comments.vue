@@ -14,8 +14,7 @@
 
 <script>
 
-    import Vue from 'vue';
-    export const EventBus = new Vue();
+    import { EventBus } from 'vuejs-estarter/services/eventBus';
 
     export default {
         name: 'Comments',
