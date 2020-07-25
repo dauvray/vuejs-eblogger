@@ -15,9 +15,14 @@
             :canshareemail="canDoIt('allow_email_sharing','enable_email_sharing', article)"
             ></social-page-sharing>
         <tag-list class="tag-article" :tags="article.tags"></tag-list>
-        <rating-buttons class="rate-aricle" :ratable="article" :canberated="canDoIt('allow_rating','enable_rates', article)"></rating-buttons>
+        <rating-buttons class="rate-aricle" :ratable="article"
+                        :canberated="canDoIt('allow_rating','enable_rates', article)">
+        </rating-buttons>
         <author-article class="author-article" :item="article"></author-article>
-<!--        <image-wrapper v-for="image in article.images" v-if="image" :picture="image" :key="image.id"></image-wrapper>-->
+        <image-wrapper v-if="image && !canDoIt('active_grapejs','enable_grapejs', article)"
+                       v-for="(image, idx) in article.images"
+                       :picture="image" :key="idx"
+        ></image-wrapper>
         <div class="content-article" v-html="article.content"></div>
         <like-buttons class="like-article" :item="article"
                       :canbeliked="canDoIt('allow_likes','enable_likes', article)"
