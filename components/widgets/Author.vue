@@ -1,7 +1,7 @@
 <template>
     <div v-if="policy.displayArticleAuthor && item.extras.hasOwnProperty('display_author')">
         <div class="author">
-            <gravatar-widget :user="item.author" />
+            <gravatar-widget :user="item.author" :size="size" />
             <span class="author-name">{{ item.author.name }}</span>
         </div>
     </div>
@@ -25,6 +25,10 @@
                 type: Object,
                 required: true
             },
+            size: {
+                type: String,
+                default: 'small'
+            }
         }
     }
 </script>

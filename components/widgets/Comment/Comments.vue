@@ -2,12 +2,28 @@
     <div v-if="canbecommented" class="comments-eblogger mt-3">
         <h4>{{ nbComments }} Commentaires</h4>
         <div v-if="!comments.length" class="comment-be-first"><h4 >Soyez le premier à commenter</h4></div>
-        <comment-form :commentable="commentable" :logged="logged" :canberated="canberated" @submitComment="submitComment" />
+        <comment-form :commentable="commentable"
+                      :logged="logged"
+                      :canberated="canberated"
+                      @submitComment="submitComment"
+        ></comment-form>
         <div v-if="comments.length" class="comment-list-wrapper">
-            <comment-list :comments="comments" :logged="logged" :canberated="canberated" :canbeliked="canbeliked"
-              :canbereported="canbereported" :commentable="commentable" @submitComment="submitComment"
-              :postdislikeurl="postdislikeurl" :postlikeurl="postlikeurl" :postreporturl="postreporturl" />
-            <blog-pagination :items="comments" :links="links" :meta="meta" @loadPage="loadComments" />
+            <comment-list :comments="comments"
+                          :logged="logged"
+                          :canberated="canberated"
+                          :canbeliked="canbeliked"
+                          :canbereported="canbereported"
+                          :commentable="commentable"
+                          @submitComment="submitComment"
+                          :postdislikeurl="postdislikeurl"
+                          :postlikeurl="postlikeurl"
+                          :postreporturl="postreporturl"
+            ></comment-list>
+            <blog-pagination :items="comments"
+                             :links="links"
+                             :meta="meta"
+                             @loadPage="loadComments"
+            ></blog-pagination>
         </div>
     </div>
 </template>

@@ -2,20 +2,46 @@
     <div class="comment-wrapper">
         <div class="comment">
             <div class="header">
-                <comment-header :comment="comment" :commentable="commentable" :canberated="canberated"></comment-header>
+                <comment-header :comment="comment"
+                                :commentable="commentable"
+                                :canberated="canberated"
+                ></comment-header>
             </div>
             <p class="card-text">{{ comment.comment }}</p>
             <div class="reactions d-flex align-items-center">
-                <like-buttons :item="comment" :logged="logged" :canbeliked="canbeliked" :postlikeurl="postlikeurl" :postdislikeurl="postdislikeurl" />
-                <a v-if="logged" href="#" @click.prevent="showForm" class="btn btn-link" >{{buttonLabel}}</a>
-                <report-buttons :item="comment" :canbereported="canbereported" :postreporturl="postreporturl" :logged="logged" />
+                <like-buttons :item="comment"
+                              :logged="logged"
+                              :canbeliked="canbeliked"
+                              :postlikeurl="postlikeurl"
+                              :postdislikeurl="postdislikeurl"
+                ></like-buttons>
+                <a v-if="logged" href="#" @click.prevent="showForm" class="btn btn-link" >
+                    {{buttonLabel}}
+                </a>
+                <report-buttons :item="comment"
+                                :canbereported="canbereported"
+                                :postreporturl="postreporturl"
+                                :logged="logged"
+                ></report-buttons>
             </div>
-            <comment-form v-if="formVisible" :item="comment" :parentId="comment.id" :commentable="commentable"
-              :canRate="false" :canberated="canberated" :canbeliked="canbeliked" :logged="logged"
-              @submitComment="submitComment" />
+            <comment-form v-if="formVisible"
+                          :item="comment"
+                          :parentId="comment.id"
+                          :commentable="commentable"
+                          :canRate="false"
+                          :canberated="canberated"
+                          :canbeliked="canbeliked"
+                          :logged="logged"
+                          @submitComment="submitComment"
+            ></comment-form>
         </div>
-        <comment-list :comments="comment.childrens" :commentable="commentable" @submitComment="submitComment"
-            :logged="logged" :canberated="canberated" class="childrens-comment" />
+        <comment-list :comments="comment.childrens"
+                      :commentable="commentable"
+                      @submitComment="submitComment"
+                      :logged="logged"
+                      :canberated="canberated"
+                      class="childrens-comment"
+        ></comment-list>
     </div>
 </template>
 
