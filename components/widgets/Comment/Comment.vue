@@ -1,47 +1,62 @@
 <template>
-    <div class="comment-wrapper">
-        <div class="comment">
-            <div class="header">
-                <comment-header :comment="comment"
-                                :commentable="commentable"
-                                :canberated="canberated"
-                ></comment-header>
-            </div>
-            <p class="card-text">{{ comment.comment }}</p>
-            <div class="reactions d-flex align-items-center">
-                <like-buttons :item="comment"
-                              :logged="logged"
-                              :canbeliked="canbeliked"
-                              :postlikeurl="postlikeurl"
-                              :postdislikeurl="postdislikeurl"
-                ></like-buttons>
-                <a v-if="logged" href="#" @click.prevent="showForm" class="btn btn-link" >
-                    {{buttonLabel}}
-                </a>
-                <report-buttons :item="comment"
-                                :canbereported="canbereported"
-                                :postreporturl="postreporturl"
-                                :logged="logged"
-                ></report-buttons>
-            </div>
-            <comment-form v-if="formVisible"
-                          :item="comment"
-                          :parentId="comment.id"
-                          :commentable="commentable"
-                          :canRate="false"
-                          :canberated="canberated"
-                          :canbeliked="canbeliked"
-                          :logged="logged"
-                          @submitComment="submitComment"
-            ></comment-form>
+    <div class="card mt-3 comment-wrapper">
+        <div class="card-body comment">
+            <comment-header
+                class="header"
+                :comment="comment"
+                :commentable="commentable"
+                :canberated="canberated"
+            ></comment-header>
+            <comment-body
+                :item="comment"
+                :logged="logged"
+                :canbeliked="canbeliked"
+                :canbereported="canbereported"
+                :postlikeurl="postlikeurl"
+                :postdislikeurl="postdislikeurl"
+                :postreporturl="postreporturl"
+                @submitComment="onSubmitComment"
+            ></comment-body>
+
+<!--            <p class="card-text">-->
+<!--                {{ comment.content }}-->
+<!--            </p>-->
+<!--            <tool-bar-->
+<!--                :comment="comment"-->
+<!--                :logged="logged"-->
+<!--                :canbeliked="canbeliked"-->
+<!--                :canbereported="canbereported"-->
+<!--                :postlikeurl="postlikeurl"-->
+<!--                :postdislikeurl="postdislikeurl"-->
+<!--                :postreporturl="postreporturl"-->
+<!--                @response-comment="showForm"-->
+<!--            ></tool-bar>-->
+<!--            <comment-form v-if="formVisible"-->
+<!--                          :item="comment"-->
+<!--                          :parentId="comment.id"-->
+<!--                          :commentable="commentable"-->
+<!--                          :canRate="false"-->
+<!--                          :canberated="canberated"-->
+<!--                          :canbeliked="canbeliked"-->
+<!--                          :logged="logged"-->
+<!--                          @submitComment="submitComment"-->
+<!--            ></comment-form>-->
+
+<!--        <comment-list class="childrens-comment"-->
+<!--                      :comments="comment.childrens"-->
+<!--                      :commentable="commentable"-->
+<!--                      :logged="logged"-->
+<!--                      :canberated="canberated"-->
+<!--                      :canbeliked="canbeliked"-->
+<!--                      :canbereported="canbereported"-->
+<!--                      :postlikeurl="postlikeurl"-->
+<!--                      :postdislikeurl="postdislikeurl"-->
+<!--                      :postreporturl="postreporturl"-->
+<!--                      @submitComment="submitComment"-->
+<!--        ></comment-list>-->
+
+
         </div>
-        <comment-list :comments="comment.childrens"
-                      :commentable="commentable"
-                      @submitComment="submitComment"
-                      :logged="logged"
-                      :canberated="canberated"
-                      class="childrens-comment"
-        ></comment-list>
     </div>
 </template>
 
@@ -53,11 +68,11 @@
     export default {
         name: 'Comment',
         components: {
-            CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
-            CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
+           // CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
+           // CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
             CommentHeader: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentHeader'),
-            LikeButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Like'),
-            ReportButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Report')
+            CommentBody: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentBody'),
+          //  ToolBar: () => import('vuejs-eblogger/components/widgets/Comment/widgets/ToolBar')
         },
         data() {
             return {
@@ -83,11 +98,11 @@
             },
             canbeliked: {
                 type: Boolean,
-                default: false
+                default: true
             },
             canbereported: {
                 type: Boolean,
-                default: false
+                default: true
             },
             postlikeurl: String,
             postdislikeurl: String,
@@ -101,7 +116,7 @@
                 EventBus.$emit("close-comment-rect-btn", this);
                 this.formVisible = !this.formVisible
             },
-            submitComment(data) {
+            onSubmitComment(data) {
                 this.$emit('submitComment', data)
                 this.formVisible = false
             },
@@ -109,7 +124,7 @@
                 if(this !== obj) {
                     this.formVisible = false
                 }
-            }
+            },
         },
         computed: {
             buttonLabel: function () {

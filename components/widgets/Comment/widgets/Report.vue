@@ -1,6 +1,8 @@
 <template>
     <div v-if="canbereported && logged" class="report">
-        <a href="#" class="btn btn-link" @click="sendReport">Signaler</a>
+        <a href="#" class="btn btn-link" @click="sendReport">
+            <i class="fas fa-exclamation-triangle"></i> Signaler
+        </a>
     </div>
 </template>
 
