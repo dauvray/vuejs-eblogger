@@ -6,6 +6,7 @@
         <tool-bar
             :comment="item"
             :logged="logged"
+            :formvisible="formvisible"
             :canbeliked="canbeliked"
             :canbereported="canbereported"
             :postlikeurl="postlikeurl"
@@ -13,33 +14,34 @@
             :postreporturl="postreporturl"
             @response-comment="onShowForm"
         ></tool-bar>
-        <comment-form v-if="formVisible"
-                      :commentable="item"
-                      :canRate="false"
-                      :canberated="canberated"
-                      :canbeliked="canbeliked"
-                      :logged="logged"
-                      @submitComment="onSubmitComment"
+        <comment-form v-if="formvisible"
+          :commentable="commentable"
+          :canRate="false"
+          :canberated="canberated"
+          :canbeliked="canbeliked"
+          :parentid="item.id"
+          :logged="logged"
+          @submitComment="onSubmitComment"
         ></comment-form>
         <comment-list :comments="item.childrens"
-                      :logged="logged"
-                      :canberated="canberated"
-                      :canbeliked="canbeliked"
-                      :canbereported="canbereported"
-                      :commentable="item"
-                      :postdislikeurl="postdislikeurl"
-                      :postlikeurl="postlikeurl"
-                      :postreporturl="postreporturl"
-                      @submitComment="onSubmitComment"
+          :commentable="commentable"
+          :logged="logged"
+          :canberated="canberated"
+          :canbeliked="canbeliked"
+          :canbereported="canbereported"
+          :postdislikeurl="postdislikeurl"
+          :postlikeurl="postlikeurl"
+          :postreporturl="postreporturl"
+          @submitComment="onSubmitComment"
         ></comment-list>
     </div>
 </template>
 
 <script>
-import {EventBus} from "vuejs-estarter/services/eventBus"
 
 export default {
     name: "CommentBody",
+    inject: ["eventBus"],
     components: {
         CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
         CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
@@ -49,6 +51,10 @@ export default {
     },
     props: {
         item: {
+            type: Object,
+            required: true
+        },
+        commentable: {
             type: Object,
             required: true
         },
@@ -68,23 +74,20 @@ export default {
             type: Boolean,
             default: true
         },
+        formvisible: {
+            type: Boolean,
+            default: false
+        },
         postlikeurl: String,
         postdislikeurl: String,
         postreporturl: String,
     },
-    data() {
-        return {
-            formVisible: false,
-        }
-    },
     methods: {
         onShowForm() {
-            EventBus.$emit("close-comment-rect-btn", this);
-            this.formVisible = !this.formVisible
+            //
         },
         onSubmitComment(data) {
             this.$emit('submitComment', data)
-            this.formVisible = false
         },
     }
 }

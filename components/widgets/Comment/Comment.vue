@@ -1,6 +1,6 @@
 <template>
     <div class="card mt-3 comment-wrapper">
-        <div class="card-body comment">
+        <div class="card-body mb-0 comment">
             <comment-header
                 class="header"
                 :comment="comment"
@@ -10,6 +10,8 @@
             <comment-body
                 :item="comment"
                 :logged="logged"
+                :commentable="commentable"
+                :formvisible="formvisible"
                 :canbeliked="canbeliked"
                 :canbereported="canbereported"
                 :postlikeurl="postlikeurl"
@@ -17,66 +19,22 @@
                 :postreporturl="postreporturl"
                 @submitComment="onSubmitComment"
             ></comment-body>
-
-<!--            <p class="card-text">-->
-<!--                {{ comment.content }}-->
-<!--            </p>-->
-<!--            <tool-bar-->
-<!--                :comment="comment"-->
-<!--                :logged="logged"-->
-<!--                :canbeliked="canbeliked"-->
-<!--                :canbereported="canbereported"-->
-<!--                :postlikeurl="postlikeurl"-->
-<!--                :postdislikeurl="postdislikeurl"-->
-<!--                :postreporturl="postreporturl"-->
-<!--                @response-comment="showForm"-->
-<!--            ></tool-bar>-->
-<!--            <comment-form v-if="formVisible"-->
-<!--                          :item="comment"-->
-<!--                          :parentId="comment.id"-->
-<!--                          :commentable="commentable"-->
-<!--                          :canRate="false"-->
-<!--                          :canberated="canberated"-->
-<!--                          :canbeliked="canbeliked"-->
-<!--                          :logged="logged"-->
-<!--                          @submitComment="submitComment"-->
-<!--            ></comment-form>-->
-
-<!--        <comment-list class="childrens-comment"-->
-<!--                      :comments="comment.childrens"-->
-<!--                      :commentable="commentable"-->
-<!--                      :logged="logged"-->
-<!--                      :canberated="canberated"-->
-<!--                      :canbeliked="canbeliked"-->
-<!--                      :canbereported="canbereported"-->
-<!--                      :postlikeurl="postlikeurl"-->
-<!--                      :postdislikeurl="postdislikeurl"-->
-<!--                      :postreporturl="postreporturl"-->
-<!--                      @submitComment="submitComment"-->
-<!--        ></comment-list>-->
-
-
         </div>
     </div>
 </template>
 
 <script>
 
-    import Vue from 'vue';
-    export const EventBus = new Vue();
-
     export default {
         name: 'Comment',
+        inject: ["eventBus"],
         components: {
-           // CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
-           // CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
             CommentHeader: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentHeader'),
             CommentBody: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentBody'),
-          //  ToolBar: () => import('vuejs-eblogger/components/widgets/Comment/widgets/ToolBar')
         },
         data() {
             return {
-                formVisible: false,
+                formvisible: false,
             }
         },
         props: {
@@ -109,28 +67,25 @@
             postreporturl: String,
         },
         created() {
-            EventBus.$on("close-comment-rect-btn", this.handleCloseReactFrom)
+            this.eventBus.$on("close-comment-form", this.handleCloseReactFrom)
         },
         methods: {
             showForm() {
-                EventBus.$emit("close-comment-rect-btn", this);
-                this.formVisible = !this.formVisible
+                this.eventBus.$emit("close-comment-form", this);
+                this.formvisible = !this.formvisible
             },
             onSubmitComment(data) {
                 this.$emit('submitComment', data)
-                this.formVisible = false
+                this.formvisible = false
             },
             handleCloseReactFrom(obj) {
-                if(this !== obj) {
-                    this.formVisible = false
+                if(this.comment.id != obj.id) {
+                    this.formvisible = false
+                } else {
+                    this.formvisible = !this.formvisible
                 }
             },
         },
-        computed: {
-            buttonLabel: function () {
-                return this.formVisible ? 'Annuler' : 'Répondre'
-            }
-        }
     }
 </script>
 

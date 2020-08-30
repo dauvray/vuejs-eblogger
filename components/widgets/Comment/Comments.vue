@@ -3,37 +3,35 @@
         <h4>{{ nbComments }} Commentaires</h4>
         <div v-if="!comments.length" class="comment-be-first"><h4 >Soyez le premier à commenter</h4></div>
         <comment-form :commentable="commentable"
-                      :logged="logged"
-                      :canberated="canberated"
-                      @submitComment="submitComment"
+                  :logged="logged"
+                  :canberated="canberated"
+                  @submitComment="submitComment"
         ></comment-form>
         <div v-if="comments.length" class="comment-list-wrapper">
             <comment-list :comments="comments"
-                          :logged="logged"
-                          :canberated="canberated"
-                          :canbeliked="canbeliked"
-                          :canbereported="canbereported"
-                          :commentable="commentable"
-                          @submitComment="submitComment"
-                          :postdislikeurl="postdislikeurl"
-                          :postlikeurl="postlikeurl"
-                          :postreporturl="postreporturl"
+                  :logged="logged"
+                  :canberated="canberated"
+                  :canbeliked="canbeliked"
+                  :canbereported="canbereported"
+                  :commentable="commentable"
+                  :postdislikeurl="postdislikeurl"
+                  :postlikeurl="postlikeurl"
+                  :postreporturl="postreporturl"
+                  @submitComment="submitComment"
             ></comment-list>
             <blog-pagination :items="comments"
-                             :links="links"
-                             :meta="meta"
-                             @loadPage="loadComments"
+                 :links="links"
+                 :meta="meta"
+                 @loadPage="loadComments"
             ></blog-pagination>
         </div>
     </div>
 </template>
 
 <script>
-
-    import { EventBus } from 'vuejs-estarter/services/eventBus';
-
-    export default {
+     export default {
         name: 'Comments',
+        inject: ["eventBus"],
         components: {
             CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
             CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
@@ -83,12 +81,10 @@
         },
         methods: {
             loadComments(url = null) {
-
                 let data = {
                     type: this.commentable.type,
                     id: this.commentable.id
                 }
-
                 axios({
                     url: url,
                     method: 'post',
@@ -111,20 +107,9 @@
                     } else {
                         this.updateCommentList(response.data, this.comments)
                     }
-                    EventBus.$emit("httpSuccess", 'Commentaire envoyé')
+                    this.eventBus.$emit("httpSuccess", 'Commentaire envoyé')
                 }).catch( (error) => {
-                    if (error.response) {
-                        // Request made and server responded
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        // The request was made but no response was received
-                        console.log(error.request);
-                    } else {
-                        // Something happened in setting up the request that triggered an Error
-                        console.log('Error', error.message);
-                    }
+                    this.eventBus.$emit("httpError", error)
                 })
             },
             updateCommentList(response, list) {

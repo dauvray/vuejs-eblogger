@@ -1,16 +1,16 @@
 <template>
     <div class="comment-list">
        <comment-item v-for="comment in comments" v-bind:key="comment.id"
-                     :comment="comment"
-                     :commentable="commentable"
-                     :logged="logged"
-                     :canberated="canberated"
-                     :canbeliked="canbeliked"
-                     :canbereported="canbereported"
-                     :postlikeurl="postlikeurl"
-                     :postdislikeurl="postdislikeurl"
-                     :postreporturl="postreporturl"
-                     @submitComment="submitComment"
+             :comment="comment"
+             :commentable="commentable"
+             :logged="logged"
+             :canberated="canberated"
+             :canbeliked="canbeliked"
+             :canbereported="canbereported"
+             :postlikeurl="postlikeurl"
+             :postdislikeurl="postdislikeurl"
+             :postreporturl="postreporturl"
+             @submitComment="submitComment"
        ></comment-item>
         <div id="comment-list-end"></div>
     </div>
