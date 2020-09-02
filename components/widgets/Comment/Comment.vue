@@ -7,6 +7,9 @@
                 :commentable="commentable"
                 :canberated="canberated"
             ></comment-header>
+            <p class="card-text">
+                {{comment.content}}
+            </p>
             <comment-body
                 :item="comment"
                 :logged="logged"
@@ -81,7 +84,8 @@
             handleCloseReactFrom(obj) {
                 if(this.comment.id != obj.id) {
                     this.formvisible = false
-                } else {
+                }
+                else {
                     this.formvisible = !this.formvisible
                 }
             },

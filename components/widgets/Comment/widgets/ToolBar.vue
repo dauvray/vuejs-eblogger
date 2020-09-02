@@ -7,8 +7,8 @@
           :postdislikeurl="postdislikeurl"
         ></like-buttons>
         <a v-if="logged" href="#" class="btn btn-link"
-           @click.prevent="responseComment" >
-            <i class="far fa-comment"></i> {{ buttonLabel }}
+            @click.prevent="responseComment"
+            ><i class="far fa-comment"></i> {{ buttonLabel }}
         </a>
         <report-buttons :item="comment"
             :canbereported="canbereported"

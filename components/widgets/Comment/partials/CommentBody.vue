@@ -1,12 +1,9 @@
 <template>
     <div>
-        <p class="card-text">
-            {{item.content}}
-        </p>
         <tool-bar
             :comment="item"
             :logged="logged"
-            :formvisible="formvisible"
+            :formvisible="canShowForm"
             :canbeliked="canbeliked"
             :canbereported="canbereported"
             :postlikeurl="postlikeurl"
@@ -14,25 +11,25 @@
             :postreporturl="postreporturl"
             @response-comment="onShowForm"
         ></tool-bar>
-        <comment-form v-if="formvisible"
-          :commentable="commentable"
-          :canRate="false"
-          :canberated="canberated"
-          :canbeliked="canbeliked"
-          :parentid="item.id"
-          :logged="logged"
-          @submitComment="onSubmitComment"
+        <comment-form v-if="canShowForm"
+            :commentable="commentable"
+            :canRate="false"
+            :canberated="canberated"
+            :canbeliked="canbeliked"
+            :parentid="item.id"
+            :logged="logged"
+            @submitComment="onSubmitComment"
         ></comment-form>
         <comment-list :comments="item.childrens"
-          :commentable="commentable"
-          :logged="logged"
-          :canberated="canberated"
-          :canbeliked="canbeliked"
-          :canbereported="canbereported"
-          :postdislikeurl="postdislikeurl"
-          :postlikeurl="postlikeurl"
-          :postreporturl="postreporturl"
-          @submitComment="onSubmitComment"
+            :commentable="commentable"
+            :logged="logged"
+            :canberated="canberated"
+            :canbeliked="canbeliked"
+            :canbereported="canbereported"
+            :postdislikeurl="postdislikeurl"
+            :postlikeurl="postlikeurl"
+            :postreporturl="postreporturl"
+            @submitComment="onSubmitComment"
         ></comment-list>
     </div>
 </template>
@@ -45,8 +42,6 @@ export default {
     components: {
         CommentForm: () => import('vuejs-eblogger/components/widgets/Comment/CommentForm'),
         CommentList: () => import('vuejs-eblogger/components/widgets/Comment/CommentList'),
-        CommentHeader: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentHeader'),
-        CommentBody: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentBody'),
         ToolBar: () => import('vuejs-eblogger/components/widgets/Comment/widgets/ToolBar')
     },
     props: {
@@ -82,9 +77,24 @@ export default {
         postdislikeurl: String,
         postreporturl: String,
     },
+    data() {
+        return {
+            isFormVisible: this.formvisible
+        }
+    },
+    computed: {
+        canShowForm: function() {
+            return this.isFormVisible
+        }
+    },
+    watch: {
+        formvisible: function (newValue, oldValue) {
+            this.isFormVisible = newValue
+        }
+    },
     methods: {
         onShowForm() {
-            //
+            this.isFormVisible = !this.isFormVisible
         },
         onSubmitComment(data) {
             this.$emit('submitComment', data)

@@ -1,28 +1,33 @@
 <template>
     <div v-if="canbecommented" class="comments-eblogger mt-3">
-        <h4>{{ nbComments }} Commentaires</h4>
-        <div v-if="!comments.length" class="comment-be-first"><h4 >Soyez le premier à commenter</h4></div>
-        <comment-form :commentable="commentable"
-                  :logged="logged"
-                  :canberated="canberated"
-                  @submitComment="submitComment"
+        <div v-if="showInfos">
+            <h4>{{ nbComments }} Commentaires</h4>
+            <div v-if="!comments.length" class="comment-be-first"><h4 >Soyez le premier à commenter</h4></div>
+        </div>
+        <comment-form
+            v-if="formvisible"
+            :commentable="commentable"
+            :logged="logged"
+            :canberated="canberated"
+            @submitComment="onSubmitComment"
         ></comment-form>
         <div v-if="comments.length" class="comment-list-wrapper">
             <comment-list :comments="comments"
-                  :logged="logged"
-                  :canberated="canberated"
-                  :canbeliked="canbeliked"
-                  :canbereported="canbereported"
-                  :commentable="commentable"
-                  :postdislikeurl="postdislikeurl"
-                  :postlikeurl="postlikeurl"
-                  :postreporturl="postreporturl"
-                  @submitComment="submitComment"
+                :logged="logged"
+                :canberated="canberated"
+                :canbeliked="canbeliked"
+                :canbereported="canbereported"
+                :commentable="commentable"
+                :postdislikeurl="postdislikeurl"
+                :postlikeurl="postlikeurl"
+                :postreporturl="postreporturl"
+                @submitComment="onSubmitComment"
             ></comment-list>
-            <blog-pagination :items="comments"
-                 :links="links"
-                 :meta="meta"
-                 @loadPage="loadComments"
+            <blog-pagination
+                :items="comments"
+                :links="links"
+                :meta="meta"
+                @loadPage="loadComments"
             ></blog-pagination>
         </div>
     </div>
@@ -71,6 +76,14 @@
                 type: Boolean,
                 default: false
             },
+            formvisible: {
+                type: Boolean,
+                default: true
+            },
+            showInfos: {
+                type: Boolean,
+                default: true
+            },
         },
         created: function () {
             // init data
@@ -96,7 +109,7 @@
                     this.nbComments = response.data.meta.total
                 })
             },
-            submitComment(data) {
+            onSubmitComment(data) {
                 axios({ url: this.postcommenturl,
                         method: 'post',
                         data: data
@@ -111,6 +124,7 @@
                 }).catch( (error) => {
                     this.eventBus.$emit("httpError", error)
                 })
+                this.$emit('submitComment', data)
             },
             updateCommentList(response, list) {
                 list.forEach(comment => {
