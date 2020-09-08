@@ -1,12 +1,20 @@
 <template>
     <div class="d-flex align-items-center">
-        <author-comment :author="comment.commented" class="author pr-2" />
-        <date-helper :date="comment.created_at" class="date pr-2" :format="'since'"/>
-        <rating-buttons v-if="comment.parent_id == 0"
-                        :canberated="canberated"
-                        :ratable="comment"
-                        :parent="commentable"
-                        class="rating"
+        <author-comment
+            :author="comment.commented"
+            class="author pr-2"
+        ></author-comment>
+        <date-helper
+            :date="comment.created_at"
+            class="date pr-2"
+            :format="'since'"
+        ></date-helper>
+        <rating-buttons
+            v-if="comment.parent_id == 0"
+            :canberated="canberated"
+            :ratable="comment"
+            :parent="commentable"
+            class="rating"
         ></rating-buttons>
     </div>
 </template>

@@ -1,6 +1,10 @@
 <template>
     <div class="author d-flex align-items-center">
-        <gravatar-widget class="float-left" :user="author" :size="size"></gravatar-widget>
+        <gravatar-widget
+            class="float-left"
+            :user="author"
+            :size="size"
+        ></gravatar-widget>
         <span class="author-name">{{ author.name }}</span>
     </div>
 </template>
