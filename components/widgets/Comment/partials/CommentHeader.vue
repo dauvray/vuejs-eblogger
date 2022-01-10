@@ -1,6 +1,7 @@
 <template>
     <div class="d-flex align-items-center">
         <author-comment
+            v-if="comment.commented"
             :author="comment.commented"
             class="author pr-2"
         ></author-comment>
