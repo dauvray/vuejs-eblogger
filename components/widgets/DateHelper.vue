@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <div class="date" v-if="format=='since'">
+    <div class="date">
+        <template  v-if="format=='since'">
             {{ timeSince(date) }}
-        </div>
-        <div class="date" v-if="format=='date'">
+        </template>
+        <template v-if="format=='date'">
             {{ new Date(date).toLocaleDateString() }}
-        </div>
+        </template>
     </div>
 </template>
 

@@ -1,7 +1,12 @@
 <template>
-    <div class="d-flex" v-if="canberated">
-        <star-rating :read-only="readOnly"
-                     :show-rating="false" :rating="ratingValue" :star-size="15" @rating-selected ="sendRating" ></star-rating>
+    <div class="rating d-flex" v-if="canberated">
+        <star-rating
+            :read-only="readOnly"
+            :show-rating="false"
+            :rating="ratingValue"
+            :star-size="15"
+            @rating-selected ="sendRating"
+        ></star-rating>
         <div v-if="showcounter">
             <span class="rate-text">sur {{ this.ratable.average_count }} votes</span>
         </div>

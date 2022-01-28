@@ -2,23 +2,29 @@
     <form v-if="logged" class="comment-form-wrapper" v-on:submit.prevent>
         <div class="form-group m-0">
             <label for="sendComment">Votre commentaire</label>
-            <rating-buttons v-if="parentid === 0 && canberated"
+            <rating-buttons
+                v-if="parentid === 0 && canberated"
                 :canberated="canberated"
                 :readOnly="false"
                 :ratable="commentable"
                 @rating-selected ="setRating"
             ></rating-buttons>
-            <textarea class="form-control"
-              id="sendComment"
-              rows="3"
-              :maxlength="max"
-              v-model="content"
+            <textarea
+                class="form-control mt-3 mb-3"
+                id="sendComment"
+                rows="3"
+                :maxlength="max"
+                v-model="content"
             ></textarea>
         </div>
         <small id="length_comment" class="form-text text-muted">
             {{ max - content.length }} caractères restants
         </small>
-        <button type="buttton" class="btn btn-primary float-right" @click="submitComment">Envoyer</button>
+        <button
+            type="buttton"
+            class="btn btn-primary btn-sm float-end"
+            @click="submitComment"
+        >Envoyer</button>
     </form>
 </template>
 
@@ -33,6 +39,7 @@
                 content: '',
                 max: 500,
                 rating: 0,
+                showForm: false,
             }
         },
         props: {
@@ -68,7 +75,7 @@
             },
             setRating(rating) {
                 this.rating = rating;
-            }
+            },
         }
     }
 </script>

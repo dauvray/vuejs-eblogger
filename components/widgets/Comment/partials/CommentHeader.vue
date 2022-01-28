@@ -1,13 +1,12 @@
 <template>
-    <div class="d-flex align-items-center">
+    <div class="comment-header">
         <author-comment
-            v-if="comment.commented"
-            :author="comment.commented"
-            class="author pr-2"
+            v-if="comment.author"
+            :author="comment.author"
+            :profileurl="profileurl"
         ></author-comment>
         <date-helper
             :date="comment.created_at"
-            class="date pr-2"
             :format="'since'"
         ></date-helper>
         <rating-buttons
@@ -15,7 +14,6 @@
             :canberated="canberated"
             :ratable="comment"
             :parent="commentable"
-            class="rating"
         ></rating-buttons>
     </div>
 </template>
@@ -40,6 +38,11 @@
             canberated: {
                 type: Boolean,
                 default: false
+            },
+            profileurl: {
+                type: String,
+                required: false,
+                default: ''
             }
         }
     }

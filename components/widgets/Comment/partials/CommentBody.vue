@@ -3,15 +3,18 @@
         <tool-bar
             :comment="item"
             :logged="logged"
-            :formvisible="canShowForm"
+            :formvisible="isFormVisible"
             :canbeliked="canbeliked"
             :canbereported="canbereported"
+            :canbedeleted="canbedeleted"
             :postlikeurl="postlikeurl"
             :postdislikeurl="postdislikeurl"
             :postreporturl="postreporturl"
             @response-comment="onShowForm"
+            @item-deleted="onItemDeleted"
         ></tool-bar>
-        <comment-form v-if="canShowForm"
+        <comment-form
+            v-if="isFormVisible"
             :commentable="commentable"
             :canRate="false"
             :canberated="canberated"
@@ -20,16 +23,20 @@
             :logged="logged"
             @submitComment="onSubmitComment"
         ></comment-form>
-        <comment-list :comments="item.childrens"
+        <comment-list
+            :comments="item.childrens"
             :commentable="commentable"
             :logged="logged"
             :canberated="canberated"
             :canbeliked="canbeliked"
             :canbereported="canbereported"
+            :canbedeleted="canbedeleted"
             :postdislikeurl="postdislikeurl"
             :postlikeurl="postlikeurl"
             :postreporturl="postreporturl"
+            :profileurl="profileurl"
             @submitComment="onSubmitComment"
+            @item-deleted="onItemDeleted"
         ></comment-list>
     </div>
 </template>
@@ -69,6 +76,10 @@ export default {
             type: Boolean,
             default: true
         },
+        canbedeleted: {
+            type: Boolean,
+            default: false
+        },
         formvisible: {
             type: Boolean,
             default: false
@@ -76,15 +87,15 @@ export default {
         postlikeurl: String,
         postdislikeurl: String,
         postreporturl: String,
+        profileurl: {
+            type: String,
+            required: false,
+            default: ''
+        }
     },
     data() {
         return {
             isFormVisible: this.formvisible
-        }
-    },
-    computed: {
-        canShowForm: function() {
-            return this.isFormVisible
         }
     },
     watch: {
@@ -99,6 +110,9 @@ export default {
         onSubmitComment(data) {
             this.$emit('submitComment', data)
         },
+        onItemDeleted(data) {
+            this.$emit('item-deleted', data)
+        }
     }
 }
 </script>

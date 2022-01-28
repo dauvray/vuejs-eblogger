@@ -1,20 +1,31 @@
 <template>
     <div class="reactions d-flex align-items-center">
-        <like-buttons :item="comment"
-          :logged="logged"
-          :canbeliked="canbeliked"
-          :postlikeurl="postlikeurl"
-          :postdislikeurl="postdislikeurl"
+        <like-buttons
+            :item="comment"
+            :logged="logged"
+            :canbeliked="canbeliked"
+            :postlikeurl="postlikeurl"
+            :postdislikeurl="postdislikeurl"
         ></like-buttons>
-        <a v-if="logged" href="#" class="btn btn-link"
+        <a v-if="logged"
+            href="#"
+            class="btn btn-link"
             @click.prevent="responseComment"
-            ><i class="far fa-comment"></i> {{ buttonLabel }}
+            ><i class="lar la-comment"></i> {{ buttonLabel }}
         </a>
-        <report-buttons :item="comment"
+        <report-buttons
+            :item="comment"
             :canbereported="canbereported"
             :postreporturl="postreporturl"
             :logged="logged"
         ></report-buttons>
+        <delete-buttons
+            v-if="canDelete"
+            :logged="logged"
+            :canbedeleted="canbedeleted"
+            :item="comment"
+            @item-deleted="onItemDeleted"
+        ></delete-buttons>
     </div>
 </template>
 
@@ -25,7 +36,8 @@ export default {
     inject: ["eventBus"],
     components: {
         LikeButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Like'),
-        ReportButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Report')
+        ReportButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Report'),
+        DeleteButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Delete'),
     },
     props: {
         comment: {
@@ -44,6 +56,10 @@ export default {
             type: Boolean,
             default: false
         },
+        canbedeleted: {
+            type: Boolean,
+            default: false
+        },
         formvisible: {
             type: Boolean,
             default: false
@@ -52,17 +68,31 @@ export default {
         postdislikeurl: String,
         postreporturl: String,
     },
+    data() {
+      return {
+          me: null
+      }
+    },
+    created() {
+        this.me = JSON.parse(sessionStorage.getItem("applicationUser"))
+    },
+    computed: {
+        buttonLabel: function () {
+            return this.formvisible ? 'Annuler' : 'Répondre'
+        },
+        canDelete: function() {
+            return this.comment.author.id == this.me.id && this.canbedeleted ? true : false
+        }
+    },
     methods: {
         responseComment() {
             this.eventBus.$emit("close-comment-form", this.comment);
             this.$emit("response-comment");
         },
-    },
-    computed: {
-        buttonLabel: function () {
-            return this.formvisible ? 'Annuler' : 'Répondre'
+        onItemDeleted(data) {
+            this.$emit('item-deleted', data)
         }
-    }
+    },
 }
 </script>
 

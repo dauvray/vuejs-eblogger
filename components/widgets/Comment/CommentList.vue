@@ -1,16 +1,21 @@
 <template>
     <div class="comment-list">
-       <comment-item v-for="comment in comments" v-bind:key="comment.id"
-             :comment="comment"
-             :commentable="commentable"
-             :logged="logged"
-             :canberated="canberated"
-             :canbeliked="canbeliked"
-             :canbereported="canbereported"
-             :postlikeurl="postlikeurl"
-             :postdislikeurl="postdislikeurl"
-             :postreporturl="postreporturl"
-             @submitComment="submitComment"
+       <comment-item
+            v-for="comment in comments"
+            :key="comment.id"
+            :comment="comment"
+            :commentable="commentable"
+            :logged="logged"
+            :canberated="canberated"
+            :canbeliked="canbeliked"
+            :canbereported="canbereported"
+            :canbedeleted="canbedeleted"
+            :postlikeurl="postlikeurl"
+            :postdislikeurl="postdislikeurl"
+            :postreporturl="postreporturl"
+            :profileurl="profileurl"
+            @submitComment="submitComment"
+            @item-deleted="onItemDeleted"
        ></comment-item>
         <div id="comment-list-end"></div>
     </div>
@@ -50,13 +55,25 @@
                 type: Boolean,
                 default: false
             },
+            canbedeleted: {
+                type: Boolean,
+                default: false
+            },
             postlikeurl: String,
             postdislikeurl: String,
             postreporturl: String,
+            profileurl: {
+                type: String,
+                required: false,
+                default: ''
+            }
         },
         methods: {
             submitComment(data) {
                 this.$emit('submitComment', data)
+            },
+            onItemDeleted(data) {
+                this.$emit('item-deleted', data)
             }
         }
     }

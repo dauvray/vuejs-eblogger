@@ -1,11 +1,13 @@
 <template>
-    <div class="author d-flex align-items-center">
-        <gravatar-widget
-            class="float-left"
-            :user="author"
+    <div class="author d-flex">
+        <gravatar-status
             :size="size"
-        ></gravatar-widget>
-        <span class="author-name">{{ author.name }}</span>
+            :user="author"
+        ></gravatar-status>
+        <user-link
+            :user="author"
+            :profileurl="profileurl"
+        ></user-link>
     </div>
 </template>
 
@@ -13,7 +15,8 @@
     export default {
         name: 'Author',
         components: {
-            GravatarWidget: () => import('vuejs-estarter/components/widgets/Gravatar'),
+            GravatarStatus: () => import('vuejs-estarter/components/widgets/GravatarStatus'),
+            UserLink: () => import('vuejs-eblogger/components/widgets/links/UserLink'),
         },
         data() {
             return {
@@ -27,7 +30,21 @@
             size: {
                 type: String,
                 default: 'small'
+            },
+            profileurl: {
+                type: String,
+                required: false,
+                default: ''
             }
+        },
+        methods: {
+            convertToSlug(text) {
+                return text
+                    .toLowerCase()
+                    .replace(/ /g,'-')
+                    .replace(/[^\w-]+/g,'')
+                    ;
+            },
         }
     }
 </script>
