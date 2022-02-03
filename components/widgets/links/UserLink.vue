@@ -5,7 +5,7 @@
             <span class="user-function text-muted">{{ user.function}}</span>
         </template>
         <template v-else>
-            <span class="user-name">{{ user.function}}</span>
+            <span class="user-name">{{ user.name}}</span>
             <span class="user-function text-muted">{{ user.function}}</span>
         </template>
     </div>

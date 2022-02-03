@@ -11,7 +11,7 @@
             ></rating-buttons>
             <textarea
                 class="form-control mt-3 mb-3"
-                id="sendComment"
+                ref="sendComment"
                 rows="3"
                 :maxlength="max"
                 v-model="content"
@@ -59,6 +59,9 @@
                 type: Boolean,
                 default: false
             }
+        },
+        mounted() {
+          this.$refs.sendComment.focus()
         },
         methods: {
             submitComment() {

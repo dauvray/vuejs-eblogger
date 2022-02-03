@@ -1,7 +1,5 @@
 <template>
-    <p class="card-text mt-3">
-        {{item.content}}
-    </p>
+    <div class="card-text mt-3" v-html="item.content"></div>
 </template>
 
 <script>
