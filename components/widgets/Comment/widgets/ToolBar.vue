@@ -1,19 +1,21 @@
 <template>
     <div class="reactions d-flex align-items-center">
         <like-buttons
+            v-if="canlike"
             :item="comment"
             :logged="logged"
             :canbeliked="canbeliked"
             :postlikeurl="postlikeurl"
             :postdislikeurl="postdislikeurl"
         ></like-buttons>
-        <a v-if="logged"
+        <a v-if="logged && canresponse"
             href="#"
             class="btn btn-link"
             @click.prevent="responseComment"
             ><i class="lar la-comment"></i> {{ buttonLabel }}
         </a>
         <report-buttons
+            v-if="canreport"
             :item="comment"
             :canbereported="canbereported"
             :postreporturl="postreporturl"
@@ -82,7 +84,16 @@ export default {
         },
         canDelete: function() {
             return this.comment.author.id == this.me.id && this.canbedeleted ? true : false
-        }
+        },
+        canreport: function() {
+            return this.comment.author.id != this.me.id && this.canbereported ? true : false
+        },
+        canlike: function() {
+            return this.comment.author.id != this.me.id && this.canbeliked ? true : false
+        },
+        canresponse: function() {
+            return this.comment.author.id != this.me.id ? true : false
+        },
     },
     methods: {
         responseComment() {
