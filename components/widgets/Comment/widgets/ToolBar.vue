@@ -32,79 +32,78 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
 
-export default {
-    name: "ToolBar",
-    inject: ["eventBus"],
-    components: {
-        LikeButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Like'),
-        ReportButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Report'),
-        DeleteButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Delete'),
-    },
-    props: {
-        comment: {
-            type: Object,
-            required: true
+    export default {
+        name: "ToolBar",
+        inject: ["eventBus"],
+        components: {
+            LikeButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Like'),
+            ReportButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Report'),
+            DeleteButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Delete'),
         },
-        logged: {
-            type: Boolean,
-            default: false
+        props: {
+            comment: {
+                type: Object,
+                required: true
+            },
+            logged: {
+                type: Boolean,
+                default: false
+            },
+            canbeliked: {
+                type: Boolean,
+                default: false
+            },
+            canbereported: {
+                type: Boolean,
+                default: false
+            },
+            canbedeleted: {
+                type: Boolean,
+                default: false
+            },
+            formvisible: {
+                type: Boolean,
+                default: false
+            },
+            postlikeurl: String,
+            postdislikeurl: String,
+            postreporturl: String,
         },
-        canbeliked: {
-            type: Boolean,
-            default: false
+        data() {
+          return {}
         },
-        canbereported: {
-            type: Boolean,
-            default: false
+        computed: {
+            ...mapGetters({
+                me: 'me/getMe',
+            }),
+            buttonLabel: function () {
+                return this.formvisible ? 'Annuler' : 'Répondre'
+            },
+            canDelete: function() {
+                return this.comment.author.id == this.me.id && this.canbedeleted ? true : false
+            },
+            canreport: function() {
+                return this.comment.author.id != this.me.id && this.canbereported ? true : false
+            },
+            canlike: function() {
+                return this.comment.author.id != this.me.id && this.canbeliked ? true : false
+            },
+            canresponse: function() {
+                return this.comment.author.id != this.me.id ? true : false
+            },
         },
-        canbedeleted: {
-            type: Boolean,
-            default: false
+        methods: {
+            responseComment() {
+                this.eventBus.$emit("close-comment-form", this.comment);
+                this.$emit("response-comment");
+            },
+            onItemDeleted(data) {
+                this.$emit('item-deleted', data)
+            }
         },
-        formvisible: {
-            type: Boolean,
-            default: false
-        },
-        postlikeurl: String,
-        postdislikeurl: String,
-        postreporturl: String,
-    },
-    data() {
-      return {
-          me: null
-      }
-    },
-    created() {
-        this.me = JSON.parse(sessionStorage.getItem("applicationUser"))
-    },
-    computed: {
-        buttonLabel: function () {
-            return this.formvisible ? 'Annuler' : 'Répondre'
-        },
-        canDelete: function() {
-            return this.comment.author.id == this.me.id && this.canbedeleted ? true : false
-        },
-        canreport: function() {
-            return this.comment.author.id != this.me.id && this.canbereported ? true : false
-        },
-        canlike: function() {
-            return this.comment.author.id != this.me.id && this.canbeliked ? true : false
-        },
-        canresponse: function() {
-            return this.comment.author.id != this.me.id ? true : false
-        },
-    },
-    methods: {
-        responseComment() {
-            this.eventBus.$emit("close-comment-form", this.comment);
-            this.$emit("response-comment");
-        },
-        onItemDeleted(data) {
-            this.$emit('item-deleted', data)
-        }
-    },
-}
+    }
 </script>
 
 <style scoped>

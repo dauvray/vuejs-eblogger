@@ -123,8 +123,11 @@
                 'comments/sendComment',
                 'comments/deleteComment'
             ]),
-            loadComments() {
-                this['comments/loadComments'](this.itemType)
+            loadComments(url = '/get-comments') {
+                this['comments/loadComments']({
+                    type: this.itemType,
+                    url: url
+                })
             },
             onSubmitComment(data) {
                 this['comments/sendComment'](data)

@@ -1,6 +1,6 @@
 export default {
     getNbComments(state) {
-        return state.data.length
+        return state.meta.total
     },
     getDataComments(state) {
         return state.data

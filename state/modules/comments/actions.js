@@ -1,8 +1,8 @@
 import {RestDataSourcesMixin} from 'vuejs-estarter/mixins/RestDataSourcesMixin'
 
 export default {
-    async loadComments({commit}, item) {
-        let response = await RestDataSourcesMixin.methods.requestApi('/get-comments', 'post', item)
+    async loadComments({commit}, data) {
+        let response = await RestDataSourcesMixin.methods.requestApi(data.url, 'post', data.type)
         .then(response => {
             commit('setCommentList', response)
         })
