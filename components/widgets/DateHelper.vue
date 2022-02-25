@@ -1,7 +1,7 @@
 <template>
     <div class="date">
         <template  v-if="format=='since'">
-            {{ timeSince(date) }}
+            {{ syncDate }}
         </template>
         <template v-if="format=='date'">
             {{ new Date(date).toLocaleDateString() }}
@@ -19,6 +19,16 @@
                 type: String,
                 default: 'date'
             }
+        },
+        data() {
+            return {
+                syncDate: this.timeSince(this.date)
+            }
+        },
+        mounted() {
+            setInterval(() => {
+                this.syncDate = this.timeSince(this.date)
+            },10000)
         },
         methods: {
             timeSince(time) {

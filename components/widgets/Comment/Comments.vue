@@ -9,6 +9,7 @@
             :commentable="commentable"
             :logged="logged"
             :canberated="canberated"
+            :autofocus="false"
             @submitComment="onSubmitComment"
         ></comment-form>
         <comment-list

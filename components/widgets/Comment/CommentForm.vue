@@ -58,10 +58,16 @@
             canberated: {
                 type: Boolean,
                 default: false
+            },
+            autofocus: {
+                type: Boolean,
+                default: true
             }
         },
         mounted() {
-          this.$refs.sendComment.focus()
+            if(this.autofocus){
+                this.$refs.sendComment.focus()
+            }
         },
         methods: {
             submitComment() {
