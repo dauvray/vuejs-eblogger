@@ -100,7 +100,9 @@
                 this.$emit("response-comment");
             },
             onItemDeleted(data) {
-                this.$emit('item-deleted', data)
+                if(confirm('Supprimer cet élément ?')){
+                    this.$emit('item-deleted', data)
+                }
             }
         },
     }

@@ -22,7 +22,7 @@
     export default {
         name: 'CommentHeader',
         components: {
-            AuthorComment: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Author'),
+            AuthorComment: () => import('vuejs-estarter/components/widgets/Author'),
             DateHelper: () => import('vuejs-eblogger/components/widgets/DateHelper'),
             RatingButtons: () => import('vuejs-eblogger/components/widgets/Comment/widgets/Rate'),
         },

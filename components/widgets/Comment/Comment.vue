@@ -1,31 +1,32 @@
 <template>
-    <div class="card mt-3 comment-wrapper">
-        <div class="card-body mb-0 comment">
-            <comment-header
-                :comment="comment"
-                :commentable="commentable"
-                :canberated="canberated"
-                :profileurl="profileurl"
-            ></comment-header>
-            <comment-content
-                :item="comment"
-            ></comment-content>
-            <comment-body
-                :item="comment"
-                :logged="logged"
-                :commentable="commentable"
-                :formvisible="formvisible"
-                :canbeliked="canbeliked"
-                :canbereported="canbereported"
-                :canbedeleted="canbedeleted"
-                :postlikeurl="postlikeurl"
-                :postdislikeurl="postdislikeurl"
-                :postreporturl="postreporturl"
-                :profileurl="profileurl"
-                @submitComment="onSubmitComment"
-                @item-deleted="onItemDeleted"
-            ></comment-body>
-        </div>
+    <div class="card mt-3 mb-0 comment">
+        <comment-header
+            class="card-header"
+            :comment="comment"
+            :commentable="commentable"
+            :canberated="canberated"
+            :profileurl="profileurl"
+        ></comment-header>
+        <comment-body
+            class="card-body"
+            :item="comment"
+        ></comment-body>
+        <comment-footer
+            class="card-footer"
+            :item="comment"
+            :logged="logged"
+            :commentable="commentable"
+            :formvisible="formvisible"
+            :canbeliked="canbeliked"
+            :canbereported="canbereported"
+            :canbedeleted="canbedeleted"
+            :postlikeurl="postlikeurl"
+            :postdislikeurl="postdislikeurl"
+            :postreporturl="postreporturl"
+            :profileurl="profileurl"
+            @submitComment="onSubmitComment"
+            @item-deleted="onItemDeleted"
+        ></comment-footer>
     </div>
 </template>
 
@@ -36,8 +37,8 @@
         inject: ["eventBus"],
         components: {
             CommentHeader: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentHeader'),
-            CommentContent: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentContent'),
             CommentBody: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentBody'),
+            CommentFooter: () => import('vuejs-eblogger/components/widgets/Comment/partials/CommentFooter'),
         },
         data() {
             return {
