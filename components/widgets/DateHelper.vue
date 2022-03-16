@@ -63,7 +63,8 @@
                     [58060800000, 'siècles', 2903040000] // 60*60*24*7*4*12*100*20, 60*60*24*7*4*12*100
                 ];
                 let seconds = (+new Date() - time) / 1000,
-                    token = 'Il y a',
+                    //token = 'Il y a',
+                    token = '',
                     list_choice = 1;
 
                 if (seconds == 0) {

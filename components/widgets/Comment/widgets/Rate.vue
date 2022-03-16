@@ -26,7 +26,7 @@
         props: {
             ratable: {
                 type: Object,
-                required: true
+                required: false
             },
             readOnly: {
                 type: Boolean,

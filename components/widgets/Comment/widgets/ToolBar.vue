@@ -2,6 +2,7 @@
     <div class="reactions d-flex align-items-center">
         <like-buttons
             v-if="canlike"
+            class="pe-3"
             :item="comment"
             :logged="logged"
             :canbeliked="canbeliked"
@@ -100,9 +101,7 @@
                 this.$emit("response-comment");
             },
             onItemDeleted(data) {
-                if(confirm('Supprimer cet élément ?')){
-                    this.$emit('item-deleted', data)
-                }
+                this.$emit('item-deleted', data)
             }
         },
     }

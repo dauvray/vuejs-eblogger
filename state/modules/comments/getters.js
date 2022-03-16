@@ -1,14 +1,11 @@
 export default {
-    getNbComments(state) {
-        return state.meta.total
+    getTotalComments: (state) => (key) => {
+        return state[key].total
     },
-    getDataComments(state) {
-        return state.data
+    getComments: (state) => (key) => {
+        return state[key]
     },
-    getLinksComments(state) {
-        return state.links
-    },
-    getMetaComments(state) {
-        return state.meta
+    getLinksComments: (state) => (key) => {
+        return state[key].links
     },
 }

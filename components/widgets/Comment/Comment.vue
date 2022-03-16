@@ -1,5 +1,5 @@
 <template>
-    <div class="card mt-3 mb-0 comment">
+    <div :id="`comment-${comment.id}`" class="card mt-3 mb-0 comment">
         <comment-header
             class="card-header"
             :comment="comment"

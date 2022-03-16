@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    name: "CommentContent",
+    name: "CommentBody",
     props: {
         item: {
             type: Object,

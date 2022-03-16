@@ -15,22 +15,35 @@
             :canshareemail="canDoIt('allow_email_sharing','enable_email_sharing', article)"
             ></social-page-sharing>
         <tag-list class="tag-article" :tags="article.tags"></tag-list>
-        <rating-buttons class="rate-aricle" :ratable="article"
-                        :canberated="canDoIt('allow_rating','enable_rates', article)">
-        </rating-buttons>
-        <author-article class="author-article" :item="article"></author-article>
-        <image-wrapper v-if="image && !canDoIt('active_grapejs','enable_grapejs', article)"
-                       v-for="(image, idx) in article.images"
-                       :picture="image" :key="idx"
+        <rating-buttons
+            class="rate-aricle" :
+            ratable="article"
+            :canberated="canDoIt('allow_rating','enable_rates', article)"
+        ></rating-buttons>
+        <author-article
+            class="author-article"
+            :item="article"
+        ></author-article>
+        <image-wrapper
+            v-if="image && !canDoIt('active_grapejs','enable_grapejs', article)"
+            v-for="(image, idx) in article.images"
+            :picture="image" :key="idx"
         ></image-wrapper>
-        <div class="content-article" v-html="article.content"></div>
-        <like-buttons class="like-article" :item="article"
-                      :canbeliked="canDoIt('allow_likes','enable_likes', article)"
-                      :postlikeurl="this.$estarterRoutes.content_like"
-                      :postdislikeurl="this.$estarterRoutes.content_dislike" ></like-buttons>
-        <connection-redirect />
+        <div
+            class="content-article"
+            v-html="article.content"
+        ></div>
+        <like-buttons
+            class="like-article"
+            :item="article"
+            :canbeliked="canDoIt('allow_likes','enable_likes', article)"
+            :postlikeurl="this.$estarterRoutes.content_like"
+            :postdislikeurl="this.$estarterRoutes.content_dislike"
+        ></like-buttons>
+        <connection-redirect></connection-redirect>
         <comments class="comments-articles"
             :commentable="article"
+            :formvisible="false"
             :logged="loggedIn"
             :canbecommented="canDoIt('allow_comments','enable_comments', article)"
             :canberated="canDoIt('allow_rating','enable_rates', article)"
@@ -39,7 +52,8 @@
             :postcommenturl="this.$estarterRoutes.content_comment"
             :postlikeurl="this.$estarterRoutes.content_like"
             :postdislikeurl="this.$estarterRoutes.content_dislike"
-            :postreporturl="this.$estarterRoutes.content_report" />
+            :postreporturl="this.$estarterRoutes.content_report"
+        ></comments>
     </div>
 </template>
 
@@ -80,7 +94,6 @@
                 this.initMeta(this.article.seo)
             },
             initBreadcumb() {
-
                 let params
 
                 if(this.article.category_parent) {

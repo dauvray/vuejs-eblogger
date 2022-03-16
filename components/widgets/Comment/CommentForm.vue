@@ -2,13 +2,13 @@
     <form v-if="logged" class="comment-form-wrapper" v-on:submit.prevent>
         <div class="form-group m-0">
             <label for="sendComment">Votre commentaire</label>
-            <rating-buttons
-                v-if="parentid === 0 && canberated"
-                :canberated="canberated"
-                :readOnly="false"
-                :ratable="commentable"
-                @rating-selected ="setRating"
-            ></rating-buttons>
+<!--            <rating-buttons-->
+<!--                v-if="parentid === 0 && canberated"-->
+<!--                :canberated="canberated"-->
+<!--                :readOnly="false"-->
+<!--                :ratable="commentable"-->
+<!--                @rating-selected ="setRating"-->
+<!--            ></rating-buttons>-->
             <textarea
                 class="form-control mt-3 mb-3"
                 ref="sendComment"
@@ -20,11 +20,20 @@
         <small id="length_comment" class="form-text text-muted">
             {{ max - content.length }} caractères restants
         </small>
-        <button
-            type="buttton"
-            class="btn btn-primary btn-sm float-end"
-            @click="submitComment"
-        >Envoyer</button>
+
+        <div class="btn-group float-end" role="group" >
+            <button
+                type="buttton"
+                class="btn btn-secondary btn-sm"
+                @click="onCancelSubmitComment"
+            >Annuler</button>
+            <button
+                type="buttton"
+                class="btn btn-primary btn-sm"
+                @click="onSubmitComment"
+            >Envoyer</button>
+        </div>
+
     </form>
 </template>
 
@@ -39,12 +48,12 @@
                 content: '',
                 max: 500,
                 rating: 0,
-                showForm: false,
             }
         },
         props: {
             parentid: {
                 type: Number,
+                required: false,
                 default: 0
             },
             commentable: {
@@ -70,7 +79,7 @@
             }
         },
         methods: {
-            submitComment() {
+            onSubmitComment() {
                 const data = {
                     'rate': this.rating,
                     'id': this.commentable.id,
@@ -85,6 +94,9 @@
             setRating(rating) {
                 this.rating = rating;
             },
+            onCancelSubmitComment() {
+                this.$emit('cancel-submit-comment')
+            }
         }
     }
 </script>

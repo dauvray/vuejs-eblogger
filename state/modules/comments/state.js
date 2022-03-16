@@ -1,7 +1,5 @@
 export default () => {
     return {
-        data: [],
-        links: {},
-        meta: {}
+        // here all comments list
     }
 }

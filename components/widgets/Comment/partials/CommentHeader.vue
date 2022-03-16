@@ -9,12 +9,12 @@
             :date="comment.created_at"
             :format="'since'"
         ></date-helper>
-        <rating-buttons
-            v-if="comment.parent_id == 0"
-            :canberated="canberated"
-            :ratable="comment"
-            :parent="commentable"
-        ></rating-buttons>
+<!--        <rating-buttons-->
+<!--            v-if="comment.parent_id == 0"-->
+<!--            :canberated="canberated"-->
+<!--            :ratable="comment"-->
+<!--            :parent="commentable"-->
+<!--        ></rating-buttons>-->
     </div>
 </template>
 

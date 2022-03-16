@@ -31,10 +31,12 @@
                 'comments/deleteComment',
             ]),
             onDelete() {
-                this.$emit('item-deleted', {
-                    type: this.item.type,
-                    id: this.item.id
-                })
+                if(confirm('Supprimer cet élément ?')) {
+                    this.$emit('item-deleted', {
+                        type: this.item.type,
+                        id: this.item.id
+                    })
+                }
             }
         }
     }

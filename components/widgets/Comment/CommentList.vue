@@ -17,7 +17,6 @@
             @submitComment="submitComment"
             @item-deleted="onItemDeleted"
        ></comment-item>
-        <div id="comment-list-end"></div>
     </div>
 </template>
 
